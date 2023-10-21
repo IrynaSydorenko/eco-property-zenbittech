@@ -1,46 +1,49 @@
-# Getting Started with Create React App
+# SET UP LOCAL POSTGRESQL DB
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Setting up a local PostgreSQL database involves several steps. Here's a step-by-step guide:
 
-## Available Scripts
+1. Installation:
+   macOS:
+   Using Homebrew:
 
-In the project directory, you can run:
+brew install postgresql
 
-### `npm start`
+Once installed, you can start the PostgreSQL server using:
+brew services start postgresql
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2. Basic Configuration:
+   Create a Database:
+   After installation, a postgres user and a postgres database are created by default. To create a new database:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Switch to the postgres user:
+sudo -u postgres psql
 
-### `npm test`
+Create a new database:
+CREATE DATABASE yourdbname;
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Create a new user:
+CREATE USER yourusername WITH PASSWORD 'yourpassword';
 
-### `npm run build`
+Grant privileges:
+GRANT ALL PRIVILEGES ON DATABASE yourdbname TO yourusername;
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. DB Connection:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+postgresql://postgres:yourpassword@localhost:5432/mydb
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# SET UP .ENV VARS
 
-### `npm run eject`
+You need to set up
+DATABASE_URL="postgresql://postgres:yourpassword@localhost:5432/mydb"
+JWT_SECRET="YOUR_SECRET_HERE"
+SHADOW_DATABASE_URL="postgresql://postgres:yourpassword@localhost:5432/mydb"
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# SEED THE LOCAL DB
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Run "npm run seed" in the server
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+After all you can run the server and the client!!!
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# MY OPINION
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+The website finished 85%-90%. Need to be implemented the authorization on the front-end. But on the backend auth logic, routes and models are written. But I think in my opinion for 2-3 days it is quite a big chunk of work if do it with good quality, please let me know if you have any questions and share your opinion :)
